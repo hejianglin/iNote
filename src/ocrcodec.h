@@ -30,6 +30,7 @@ public:
     virtual QString accessToken() const { return QString(); }
 
     virtual bool decode(RequestType,const QString &) { return false; }
+    virtual bool isDecode() const { return false; }
 
     virtual bool isValid() { return false; }
     virtual QString errorString() const { return QString(); }
@@ -38,5 +39,6 @@ signals:
     void sigProgress(quint8);
     void sigFinished(const QString &reply,const QString &errorString);
 };
+
 
 #endif // OCRCODEC_H

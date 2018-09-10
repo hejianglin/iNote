@@ -32,6 +32,7 @@ public:
     QString accessToken() const override { return m_sAccessToken; }
 
     bool decode(RequestType,const QString &) override;
+    bool isDecode() const override { return m_eCurrentRequestType != RequestType_eNone; }
 
     bool isValid() override;
     QString errorString() const override { return m_sError; }
