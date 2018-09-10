@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# iNote
+*.DS_Store
+*.user
