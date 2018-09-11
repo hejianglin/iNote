@@ -61,8 +61,6 @@ void iNoteViewer::initGui()
     m_splitter->insertWidget(0,m_lblImage);
     m_splitter->insertWidget(1,m_frmResult);
 
-//    setMainLayout();
-
     m_layoutMain = new QHBoxLayout(this);
     m_layoutMain->addWidget(m_splitter);
     this->setLayout(m_layoutMain);
@@ -121,6 +119,7 @@ void iNoteViewer::slotPasteLayer(const QMimeData* mimeData)
     {
         //LoadImageFile(urls[0].toLocalFile());
         m_lblImage->setPixmap(QPixmap(urls[0].toLocalFile()));
+        emit sigAddTask(OCRCodec::RequestType_eGeneral,urls[0].toLocalFile());
     }
     else if (mimeData->hasImage())
     {
@@ -134,4 +133,9 @@ void iNoteViewer::slotPasteLayer(const QMimeData* mimeData)
     }
 
 
+}
+
+void iNoteViewer::updateResultText(const QString &text)
+{
+    m_tedtResult->setText(text);
 }

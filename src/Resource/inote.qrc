@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>inote.png</file>
+        <file>inote_connected.png</file>
+        <file>inote_disconnected.png</file>
     </qresource>
 </RCC>

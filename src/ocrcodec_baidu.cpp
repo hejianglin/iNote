@@ -36,11 +36,6 @@ bool OCRCodec_Baidu::isValid()
         return false;
     }
 
-    //    if(m_sAccessToken.isEmpty()){
-    //        m_sError = tr("access token is empty");
-    //        return false;
-    //    }
-
     return true;
 }
 
@@ -57,6 +52,7 @@ bool OCRCodec_Baidu::decode(RequestType type,const QString &path)
     }
 
     m_eCurrentRequestType = type;
+    m_sCurrentRequestFile = path;
     m_cNetworkAccessManager.post(requestHead(),requestBody(path));
     return true;
 }
@@ -67,6 +63,7 @@ void OCRCodec_Baidu::finishedDecode(const QString &ret,const QString &error)
 
     //reset
     m_eCurrentRequestType = RequestType_eNone;
+    m_sCurrentRequestFile.clear();
     m_sError.clear();
 }
 
@@ -101,6 +98,12 @@ QNetworkRequest OCRCodec_Baidu::requestHead()
     QNetworkRequest request;
     request.setUrl(QUrl(sUrl));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+//    QSslConfiguration config;
+//    config.setPeerVerifyMode(QSslSocket::VerifyNone);
+//    config.setProtocol(QSsl::TlsV1SslV3);
+//    request.setSslConfiguration(config);
+
     return request;
 }
 
@@ -218,7 +221,7 @@ void OCRCodec_Baidu::parseReply_Table(const QJsonObject &jsonObj)
 
     if(jsonObj["result"].isArray()){
         DEBUG("array");
-         QJsonArray resultArray = jsonObj["result"].toArray();
+        QJsonArray resultArray = jsonObj["result"].toArray();
         sRequestID = resultArray[0].toObject()["request_id"].toString();
         emit sigProgress(0);
     }else{
@@ -243,6 +246,11 @@ void OCRCodec_Baidu::parseReply_Table(const QJsonObject &jsonObj)
         request.setUrl(QUrl("https://aip.baidubce.com/rest/2.0/solution/v1/form_ocr/get_request_result"
                             "?access_token=" + m_sAccessToken));
         request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+//        QSslConfiguration config;
+//        config.setPeerVerifyMode(QSslSocket::VerifyNone);
+//        config.setProtocol(QSsl::TlsV1SslV3);
+//        request.setSslConfiguration(config);
 
         //body
         QByteArray body = QByteArray("request_id=").append(sRequestID);

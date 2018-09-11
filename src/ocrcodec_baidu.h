@@ -34,6 +34,9 @@ public:
     bool decode(RequestType,const QString &) override;
     bool isDecode() const override { return m_eCurrentRequestType != RequestType_eNone; }
 
+    virtual RequestType decodeType() const override { return m_eCurrentRequestType; }
+    virtual QString decodeFile() const override { return  m_sCurrentRequestFile; }
+
     bool isValid() override;
     QString errorString() const override { return m_sError; }
 
@@ -65,7 +68,7 @@ private:
     QString m_sAppKey;
     QString m_sSecretKey;
     QString m_sAccessToken;
-
+    QString m_sCurrentRequestFile;
     RequestType m_eCurrentRequestType;
     QNetworkAccessManager m_cNetworkAccessManager;
 };

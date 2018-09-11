@@ -31,6 +31,8 @@ public:
 
     virtual bool decode(RequestType,const QString &) { return false; }
     virtual bool isDecode() const { return false; }
+    virtual RequestType decodeType() const { return RequestType_eNone; }
+    virtual QString decodeFile() const { return QString(); }
 
     virtual bool isValid() { return false; }
     virtual QString errorString() const { return QString(); }

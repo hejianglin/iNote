@@ -11,12 +11,16 @@
 #include <QVBoxLayout>
 #include <QMimeData>
 
+#include "ocrcodec.h"
+
 
 class iNoteViewer : public QWidget
 {
     Q_OBJECT
 public:
     explicit iNoteViewer(QWidget *parent = 0);
+
+    void updateResultText(const QString &);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) Q_DECL_OVERRIDE;
@@ -25,7 +29,7 @@ protected:
     void keyPressEvent(QKeyEvent *pEvent) Q_DECL_OVERRIDE;
 
 signals:
-    void sigAddTask();
+    void sigAddTask(OCRCodec::RequestType type,const QString &file);
 
 public slots:
     void slotPasteLayer(const QMimeData* mimeData);
